@@ -6,18 +6,16 @@ import {
   AutoIncrement,
   DataType,
   AllowNull,
-  Unique,
-  Default,
   CreatedAt,
   UpdatedAt,
 } from 'sequelize-typescript';
 import { RoleEnum } from '../../enums/role.enum';
 
 @Table({
-  tableName: 'users',
+  tableName: 'todos',
   timestamps: true,
 })
-export class User extends Model {
+export class Todo extends Model {
   @PrimaryKey
   @AutoIncrement
   @Column({
@@ -25,37 +23,35 @@ export class User extends Model {
   })
   id: number;
 
-  @Column({
-    type: DataType.STRING,
-  })
-  name: string;
-
-  @Unique(true)
   @AllowNull(false)
   @Column({
     type: DataType.STRING,
   })
-  email: string;
+  title: string;
 
-  @AllowNull(false)
   @Column({
     type: DataType.STRING,
   })
-  password: string;
+  description: string;
 
   @AllowNull(false)
   @Column({
     type: DataType.ENUM(...Object.values(RoleEnum)),
     defaultValue: RoleEnum.User,
   })
-  role: RoleEnum;
+  type: RoleEnum;
 
   @AllowNull(false)
-  @Default(false)
   @Column({
-    type: DataType.BOOLEAN,
+    type: DataType.DATE,
   })
-  isVerify: boolean;
+  startDate: Date;
+
+  @AllowNull(false)
+  @Column({
+    type: DataType.DATE,
+  })
+  endDate: Date;
 
   @CreatedAt
   @Column({

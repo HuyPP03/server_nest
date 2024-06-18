@@ -1,6 +1,9 @@
 import { ConfigService } from '@nestjs/config';
 import { Sequelize } from 'sequelize-typescript';
 import { User } from './models/user.model';
+import { Todo } from './models/todo.model';
+import { TodoUser } from './models/todo_user.model';
+import { Notification } from './models/notification.model';
 
 export const databaseProviders = [
   {
@@ -14,7 +17,7 @@ export const databaseProviders = [
         password: configService.get<string>('database.password'),
         database: configService.get<string>('database.database'),
       });
-      sequelize.addModels([User]);
+      sequelize.addModels([User, Todo, TodoUser, Notification]);
       await sequelize.sync();
       return sequelize;
     },

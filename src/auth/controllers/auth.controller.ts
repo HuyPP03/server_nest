@@ -4,7 +4,7 @@ import { CreateUserDto } from '../../dtos/create-user.dto';
 import { DataResponse } from '../../utility/dataResponse';
 import { LoginUserDto } from '../../dtos/login-user.dto';
 
-@Controller('auth')
+@Controller()
 export class AuthController {
   constructor(private authService: AuthService) {}
   @Post('register')
@@ -18,6 +18,13 @@ export class AuthController {
   @HttpCode(HttpStatus.OK)
   async login(@Body() loginUserDto: LoginUserDto) {
     const user = await this.authService.login(loginUserDto);
+    return new DataResponse(user, 'Success', HttpStatus.OK);
+  }
+
+  @Post('verify')
+  @HttpCode(HttpStatus.OK)
+  async verify(@Body() data: any) {
+    const user = await this.authService.verify(data.token);
     return new DataResponse(user, 'Success', HttpStatus.OK);
   }
 }
