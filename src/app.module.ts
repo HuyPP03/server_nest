@@ -10,6 +10,7 @@ import { TodoModule } from './todo/todo.module';
 import { TodoUserModule } from './todo_user/todo_user.module';
 import { NotificationModule } from './notification/notification.module';
 import { RouterModule } from '@nestjs/core';
+import { FileUploadInterceptor } from './utility/uploadFile.util';
 
 @Module({
   imports: [
@@ -38,6 +39,6 @@ import { RouterModule } from '@nestjs/core';
     ]),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, FileUploadInterceptor],
 })
 export class AppModule {}

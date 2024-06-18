@@ -1,8 +1,10 @@
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import helmet from 'helmet';
+import { join } from 'path';
 
-export function configureApp(app: INestApplication) {
+export function configureApp(app: NestExpressApplication) {
   const configService = app.get(ConfigService);
   const allowedOrigins = configService.get<string[]>('app.allowedOrigins');
 
@@ -33,4 +35,5 @@ export function configureApp(app: INestApplication) {
 
   app.use(helmet());
   app.useGlobalPipes(new ValidationPipe());
+  app.useStaticAssets(join(__dirname, '..', 'uploads'));
 }
