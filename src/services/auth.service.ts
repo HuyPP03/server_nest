@@ -1,10 +1,10 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { User } from '../../database/models/user.model';
-import { CreateUser, LoginUser } from '../../interfaces/user.interface';
-import { PasswordService } from '../../utility/hashing';
+import { User } from '../database/models/user.model';
+import { CreateUser, LoginUser } from '../interfaces/user.interface';
+import { PasswordService } from '../utility/hashing';
 import { JwtService } from '@nestjs/jwt';
-import { MailService } from '../../utility/mail.util';
-import { BuildHtmlService } from '../../utility/string.util';
+import { MailService } from '../utility/mail.util';
+import { BuildHtmlService } from '../utility/string.util';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()

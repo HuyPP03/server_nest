@@ -1,16 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import envConfig from './env';
 import { DatabaseModule } from './database/database.module';
-import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
-import { TodoModule } from './todo/todo.module';
-import { TodoUserModule } from './todo_user/todo_user.module';
-import { NotificationModule } from './notification/notification.module';
+import { AuthModule } from './routers/auth.module';
+import { AdminModule } from './routers/admin.module';
+import { UserModule } from './routers/user.module';
+import { PublicModule } from './routers/public.module';
 import { RouterModule } from '@nestjs/core';
-import { FileUploadInterceptor } from './utility/uploadFile.util';
 
 @Module({
   imports: [
@@ -20,25 +16,35 @@ import { FileUploadInterceptor } from './utility/uploadFile.util';
     }),
     DatabaseModule,
     AuthModule,
+    AdminModule,
     UserModule,
-    TodoModule,
-    TodoUserModule,
-    NotificationModule,
+    PublicModule,
     RouterModule.register([
       {
         path: 'api',
         module: AppModule,
         children: [
-          { path: 'auth', module: AuthModule },
-          { path: 'user', module: UserModule },
-          { path: 'todo', module: TodoModule },
-          { path: 'todo-user', module: TodoUserModule },
-          { path: 'notification', module: NotificationModule },
+          {
+            path: 'auth',
+            module: AuthModule,
+          },
+          {
+            path: 'admin',
+            module: AdminModule,
+          },
+          {
+            path: 'user',
+            module: UserModule,
+          },
+          {
+            path: 'public',
+            module: PublicModule,
+          },
         ],
       },
     ]),
   ],
-  controllers: [AppController],
-  providers: [AppService, FileUploadInterceptor],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
