@@ -16,14 +16,17 @@ import { UserService } from '../../services/user.service';
 import { RolesGuard } from '../../guards/role.guard';
 import { Roles } from '../../decorators/auth.decorator';
 import { RoleEnum } from '../../enums/role.enum';
+import { VerifiesGuard } from '../../guards/verify.guard';
+import { Verifies } from '../../decorators/verify.decorator';
+import { VerifyEnum } from '../../enums/verify.enum';
 
-@UseGuards(AuthGuard)
+@UseGuards(AuthGuard, RolesGuard, VerifiesGuard)
+@Verifies(VerifyEnum.True)
+@Roles(RoleEnum.Admin)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @UseGuards(RolesGuard)
-  @Roles(RoleEnum.Admin)
   @Delete(':userId')
   @HttpCode(HttpStatus.OK)
   async deleteUser(@Param('userId') userId: string) {
@@ -38,8 +41,6 @@ export class UserController {
     }
   }
 
-  @UseGuards(RolesGuard)
-  @Roles(RoleEnum.Admin)
   @Get(':userId')
   @HttpCode(HttpStatus.OK)
   async getUser(@Param('userId') userId: string) {
@@ -54,8 +55,6 @@ export class UserController {
     }
   }
 
-  @UseGuards(RolesGuard)
-  @Roles(RoleEnum.Admin)
   @Get()
   @HttpCode(HttpStatus.OK)
   async getUsers() {
@@ -70,8 +69,6 @@ export class UserController {
     }
   }
 
-  @UseGuards(RolesGuard)
-  @Roles(RoleEnum.Admin)
   @Put(':userId')
   @HttpCode(HttpStatus.OK)
   async updateUser(@Param('userId') userId: string, @Body() data: any) {

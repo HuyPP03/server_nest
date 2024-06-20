@@ -13,7 +13,11 @@ import { DataResponse } from '../../utility/dataResponse';
 import { Request as ExpressRequest } from 'express';
 import { AuthGuard } from '../../guards/auth.guard';
 import { UserService } from '../../services/user.service';
-@UseGuards(AuthGuard)
+import { VerifiesGuard } from '../../guards/verify.guard';
+import { Verifies } from '../../decorators/verify.decorator';
+import { VerifyEnum } from '../../enums/verify.enum';
+@UseGuards(AuthGuard, VerifiesGuard)
+@Verifies(VerifyEnum.True)
 @Controller()
 export class UserController {
   constructor(private readonly userService: UserService) {}
